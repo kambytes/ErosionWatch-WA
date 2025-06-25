@@ -1,0 +1,47 @@
+# Virtual environment folders
+venv/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask instance and settings
+instance/
+.env                     # Environment variables & secrets
+.env.local
+.env.*.local
+
+# SQLite database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Flask cache or log files
+*.log
+
+# VS Code settings
+.vscode/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Packaging / Build Files
+build/
+dist/
+*.egg-info/
+.eggs/
+# ========================
+# Temporary Files
+# ========================
+*.swp
+*.swo
+*~
