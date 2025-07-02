@@ -1,0 +1,159 @@
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: #fefefe;
+  color: #ffffff;
+  font-weight: 300;
+}
+
+/* Typography */
+.heading-xl {
+  font-weight: 200;
+  font-size: 3rem;
+}
+
+.paragraph-lg {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background: #4f80f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  z-index: 1000;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  justify-content: center;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a,
+.dropbtn {
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.nav-links a:hover,
+.dropbtn:hover {
+  text-decoration: underline;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  right: 2rem;
+  top: 10px;
+}
+
+.logo img {
+  height: 120px;
+  transform: translateY(-30%);
+}
+
+/* Dropdown Menu */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background-color: white;
+  color: black;
+  min-width: 180px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 0.75rem 1rem;
+  display: block;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.show {
+  display: block;
+}
+
+.arrow {
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  background-image: url('/app/static/images/coastal-erosion-background-image.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 90%;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}

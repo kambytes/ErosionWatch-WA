@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ErosionWatch-WA | Visualise & Predict Coastal Erosion in Western Australia</title>
-        <meta name="description" content="ErosionWatch-WA is a web application to visualise, analyse, and predict the erosion of Western Australia's coastlines using geospatial data and environmental modelling.">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>ErosionWatch-WA | Visualise & Predict Coastal Erosion in WA</title>
+  <meta name="description" content="ErosionWatch-WA is a web application to visualise, analyse, and predict erosion along Western Australia's coastlines using geospatial data and environmental modelling.">
 
-        <link rel="stylesheet" href="/app/static/css/home.css">
-    </head>
-    <body>
-        <!-- Navigation bar -->
-        <nav class="navbar">
-            <div class="logo">
-                <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="ErosionWatch-WA Logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Learn &#9662;</a></li>
-                <li><a href="#">Map</a></li>
-                <li><a href="#">Data Analysis</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-        
-        <!-- Hero section -->
-        <section class="hero">
-            <div class="overlay">
-                <img src="/app/static/images/coastal-erosion-background-image.jpg" alt="Background image of coastal erosion. Photo by Mo on Unsplash."
-                <h1>New lens on coastal change</h1>
-                <p>ErosionWatch-WA integrates geospatial datasets and models to monitor and forecast erosion along WA's coastline.</p>
-            </div>
-            <div class="scroll-indicator">
-                <span>&#9662;</span>
-            </div>
-        </section>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app/static/css/home.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li class="dropdown">
+          <button class="dropbtn">
+            Learn <span class="arrow">&#9662;</span>
+          </button>
+          <ul class="dropdown-content">
+            <li><a href="#">User Guide</a></li>
+            <li><a href="#">Data Sources</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Map</a></li>
+        <li><a href="#">Analysis</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+      <div class="logo">
+        <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="ErosionWatch-WA Logo" />
+      </div>
+    </nav>
+  </header>
 
-        <script src="/app/static/js/home.js"></script>
-    </body>
+  <section class="hero">
+    <div class="overlay">
+      <h1 class="heading-xl">New lens on coastal change</h1>
+      <p class="paragraph-lg">ErosionWatch-WA integrates geospatial datasets and models to monitor and forecast erosion along WA's coastline.</p>
+    </div>
+    <div class="scroll-indicator"><span>&#9662;</span></div>
+  </section>
+
+  <script src="/app/static/js/home.js"></script>
+</body>
 </html>
