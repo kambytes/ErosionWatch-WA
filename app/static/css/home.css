@@ -19,7 +19,7 @@ html, body {
   top: 0;
   width: 100%;
   height: 70px;
-  background: #4f80f5;
+  background: #2c6bed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +75,7 @@ html, body {
   position: absolute;
   top: 100%;
   left: 0;
-  background: #4f80f5;
+  background: #2c6bed;
   min-width: 180px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   z-index: 1001;
@@ -91,7 +91,7 @@ html, body {
 }
 
 .dropdown-content a:hover {
-  background-color: #3c6de0;
+  background-color: #204eba;
 }
 
 .dropdown.open .dropdown-content {
