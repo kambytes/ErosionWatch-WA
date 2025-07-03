@@ -1,4 +1,12 @@
-#map { 
-    height: 600px; 
-    width: 800px;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+    position: static;
+    display: block;
+    height: calc(100vh - 130px);
+    width: 100%;
 }
