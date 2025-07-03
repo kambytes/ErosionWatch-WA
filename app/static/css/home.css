@@ -10,6 +10,7 @@ html, body {
   background-color: #fefefe; /* This is a light grey, which is close to white */
   color: #ffffff;
   font-weight: 300;
+  scroll-behavior: smooth;
 }
 
 /* Navbar */
@@ -68,44 +69,44 @@ html, body {
   transform: translateY(-11%);
 }
 
-/* Dropdown Menu */
+/* Dropdown */
 .dropdown-content {
   display: none;
   position: absolute;
   top: 100%;
-  background-color: #4f80f5;
-  color: black;
+  left: 0;
+  background: #4f80f5;
   min-width: 180px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-  border-radius: 4px;
-  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   z-index: 1001;
+  padding: 0.5rem 0;
+  border-radius: 6px;
 }
 
 .dropdown-content a {
-  color: #ffffff;
-  padding: 0.75rem 1rem;
   display: block;
+  padding: 0.5rem 1rem;
+  color: white;
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 400;
 }
 
 .dropdown-content a:hover {
-  background-color: #2C6BED;
+  background-color: #3c6de0;
 }
 
-.show {
+.dropdown.open .dropdown-content {
   display: block;
 }
 
+/* Arrow */
 .arrow {
-  margin-left: 4px;
+  display: inline-block;
+  margin-left: 0.3rem;
   transition: transform 0.3s ease;
 }
 
-.rotated {
-  transform: rotate(180deg);
+.dropdown.open .arrow {
+  transform: rotate(90deg);
 }
 
 /* Hero Section */
@@ -113,33 +114,108 @@ html, body {
   height: 100vh;
   background-image: url('/app/static/images/coastal-erosion-background-image.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: 25% 25%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: left;
 }
 
-.overlay {
-  background: rgba(0, 0, 0, 0.4);
+.hero-text {
   padding: 2rem;
   border-radius: 8px;
   max-width: 90%;
 }
 
-/* Scroll indicator */
+/* Typography System */
+
+.heading-xl {
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.heading-l {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.heading-m {
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1.3;
+}
+
+.heading-s {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.paragraph {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.caption {
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+/* Typography colours */
+
+.text-white {
+  color: white;
+}
+
+.text-dark {
+  color: #1c1c1c;
+}
+
+.text-muted {
+  color: #6c7a89;
+}
+
+.text-light-grey {
+  color: #aaa;
+}
+
+.text-blue {
+  color: #2c6bed;
+}
+
 .scroll-indicator {
   position: absolute;
   bottom: 30px;
   width: 100%;
   text-align: center;
   font-size: 2rem;
-  color: white;
   animation: bounce 2s infinite;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+.scroll-down {
+  color: white;
+  text-decoration: none;
+  font-size: 2rem;
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.scroll-down:hover {
+  transform: translateY(4px);
 }

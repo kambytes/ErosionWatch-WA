@@ -8,7 +8,7 @@
   <meta name="description" content="ErosionWatch-WA is a web application to visualise, analyse, and predict erosion along Western Australia's coastlines using geospatial data and environmental modelling.">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/app/static/css/home.css" />
 </head>
 
@@ -16,9 +16,9 @@
   <header>
     <nav class="navbar">
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
+        <li><a href="/app/templates/home.html">Home</a></li>
         <li class="dropdown">
-          <button class="dropbtn">
+          <button class="dropbtn" id="learn-toggle">
             Learn <span class="arrow">&#9662;</span>
           </button>
           <ul class="dropdown-content">
@@ -27,7 +27,7 @@
             <li><a href="#">FAQ</a></li>
           </ul>
         </li>
-        <li><a href="#">Map</a></li>
+        <li><a href="/app/templates/map.html">Map</a></li>
         <li><a href="#">Analysis</a></li>
         <li><a href="#">About</a></li>
       </ul>
@@ -38,13 +38,19 @@
   </header>
 
   <section class="hero">
-    <div class="overlay">
-      <h1 class="heading-xl">New lens on coastal change</h1>
-      <p class="paragraph-lg">ErosionWatch-WA integrates geospatial datasets and models to monitor and forecast erosion along WA's coastline.</p>
+    <div class="hero-text">
+      <h1 class="heading-xl text-white">New lens on coastal change</h1>
+      <p class="paragraph text-white">ErosionWatch-WA integrates geospatial datasets and models to monitor and forecast erosion along WA's coastline.</p>
     </div>
-    <div class="scroll-indicator"><span>&#9662;</span></div>
+    <div class="scroll-indicator">
+        <a href="#main-content" class="scroll-down">&#9662;</a>
+    </div>
   </section>
 
+  <section id="main-content">
+
+
+  </section>
   <script src="/app/static/js/home.js"></script>
 </body>
 </html>
