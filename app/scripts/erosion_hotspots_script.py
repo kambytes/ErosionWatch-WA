@@ -1,15 +1,15 @@
 import requests
 import geopandas as gpd
 
-SHAPEFILE_FILE = "../data/raw/"
-GEOJSON_FILE = "../data/processed/"
+SHAPEFILE_FILE = "../data/raw/coastal_erosion_shapefile"
+GEOJSON_FILE = "../data/processed/coastal_erosion_geojson"
 
 def shapefile_to_geojson(input_file_path, output_file_path):
     # Open and read shapefile
     gdf = gpd.read_file(input_file_path)
 
     # Write the shapefile into new .geojson file
-    gdf.to_file(output_file_path)
+    gdf.to_file(output_file_path, driver="GEOJSON")
 
 # Call function with file paths as arguments
 shapefile_to_geojson(SHAPEFILE_FILE, GEOJSON_FILE)
