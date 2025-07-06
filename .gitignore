@@ -46,6 +46,6 @@ dist/
 *.swo
 *~
 
-# Ignore raw shapefiles adn processed GeoJSON
-data/raw/
-data/processed/*.geojson
+# Ignore raw shapefiles and processed GeoJSON
+app/data/raw/
+app/data/processed/*.geojson
