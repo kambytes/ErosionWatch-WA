@@ -48,4 +48,4 @@ dist/
 
 # Ignore raw shapefiles and processed GeoJSON
 app/data/raw/
-app/data/processed/*.geojson
+app/data/processed/ 
