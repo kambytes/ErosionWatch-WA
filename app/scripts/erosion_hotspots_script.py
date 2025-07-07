@@ -2,7 +2,7 @@ import requests
 import geopandas as gpd
 
 SHAPEFILE_FILE = "../data/raw/coastal_erosion_shapefile"
-GEOJSON_FILE = "../data/processed/coastal_erosion_geojson"
+GEOJSON_FILE = "../data/processed/erosion_hotspots_geojson"
 
 def shapefile_to_geojson(input_file_path, output_file_path):
     # Open and read shapefile
