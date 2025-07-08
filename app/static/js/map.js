@@ -12,19 +12,46 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 4. 
 */
 
+async function fetchErosionHotspotsData() {
+    try {
+        const response = await fetch("/app/data/processed/erosion_hotspots_geojson.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch resource");
+        } 
+
+        const data = await response.json();
+        L.geoJSON(data, {
+            style: layerStyle.default 
+        },
+        onEachFeature: (feature, layer) => {
+        const props = feature.properties;
+        layer.bindPopup(`<strong>${props.HOTSPOT_NA}</strong><br>Locality: ${props.LOCALITY}<br>Hazard: ${props.HAZARD}`);
+      }).addTo(map);
+        
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+
+
+
+
+
 fetch("/app/data/processed/erosion_hotspots_geojson.geojson")
     .then(response => {
         if(!response.ok){
             throw new Error("Unable to fetch resource");
         }
         return response.json();
-    }
+    })
     .then(data => {
         L.geoJSON(data, {
             style: layerStyle.default
         }).addTo(map)
 
-    })
+    }) 
     .catch(error => console.log(error));
 
 var layerStyle = {
