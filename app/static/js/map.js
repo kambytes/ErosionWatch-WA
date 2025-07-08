@@ -12,6 +12,35 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 4. 
 */
 
-function erosion_hotspots_overlay() {
-    
+fetch("/app/data/processed/erosion_hotspots_geojson.geojson")
+    .then(response => {
+        if(!response.ok){
+            throw new Error("Unable to fetch resource");
+        }
+        return response.json();
+    }
+    .then(data => {
+        L.geoJSON(data, {
+            style: layerStyle.default
+        }).addTo(map)
+
+    })
+    .catch(error => console.log(error));
+
+var layerStyle = {
+    'default': {
+        'color': 'green',
+        'fillOpacity': 0.4,
+        'weight': 2
+    },
+    'highlighted': {
+        'color': 'blue',
+        'fillOpacity': 0.4,
+        'weight': 2
+    },
+    'selection': {
+        'color': 'brown',
+        'fillOpacity': 0.4,
+        'weight': 2
+    }
 }
