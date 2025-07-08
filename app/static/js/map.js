@@ -5,12 +5,6 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-/*
-1. fetch request to pull datat from /app/data/processed/coastal_erosion_geojson.geojson
-2. The function will .then (if successful ... continue the map portion)
-3. else .then (unsucessful... error message)
-4. 
-*/
 fetchErosionHotspotsData();
 async function fetchErosionHotspotsData() {
     try {
@@ -24,11 +18,14 @@ async function fetchErosionHotspotsData() {
         L.geoJSON(data, {
             style: layerStyle.default,
             onEachFeature: function(feature, layer) {
+                const props = feature.properties;
+                layer.bindPopup(props.HOTSPOTS_NA);
                 layer.on('click', function(){
-                    this.setStyle(layerStyle.highlighted)
+                    this.setStyle(layerStyle.selection)
+                    this.openPopup();
                 })
                 layer.on('mouseover', function(){
-                    this.setStyle(layerStyle.selection)
+                    this.setStyle(layerStyle.highlighted)
                 })
                 layer.on('mouseout', function(){
                     this.setStyle(layerStyle.default)
@@ -36,10 +33,9 @@ async function fetchErosionHotspotsData() {
             }
         }).addTo(map)
         
-    }
-    catch(error){
-        console.error(error);
-    }
+    } catch (error) {
+        console.log("There was an error loading GeoJSON:", error);
+    };
 }
 
 var layerStyle = {
