@@ -11,7 +11,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 3. else .then (unsucessful... error message)
 4. 
 */
-
+fetchErosionHotspotsData();
 async function fetchErosionHotspotsData() {
     try {
         const response = await fetch("/app/data/processed/erosion_hotspots_geojson.geojson");
@@ -20,13 +20,21 @@ async function fetchErosionHotspotsData() {
         } 
 
         const data = await response.json();
+        
         L.geoJSON(data, {
-            style: layerStyle.default 
-        },
-        onEachFeature: (feature, layer) => {
-        const props = feature.properties;
-        layer.bindPopup(`<strong>${props.HOTSPOT_NA}</strong><br>Locality: ${props.LOCALITY}<br>Hazard: ${props.HAZARD}`);
-      }).addTo(map);
+            style: layerStyle.default,
+            onEachFeature: function(feature, layer) {
+                layer.on('click', function(){
+                    this.setStyle(layerStyle.highlighted)
+                })
+                layer.on('mouseover', function(){
+                    this.setStyle(layerStyle.selection)
+                })
+                layer.on('mouseout', function(){
+                    this.setStyle(layerStyle.default)
+                })
+            }
+        }).addTo(map)
         
     }
     catch(error){
@@ -34,29 +42,9 @@ async function fetchErosionHotspotsData() {
     }
 }
 
-
-
-
-
-
-fetch("/app/data/processed/erosion_hotspots_geojson.geojson")
-    .then(response => {
-        if(!response.ok){
-            throw new Error("Unable to fetch resource");
-        }
-        return response.json();
-    })
-    .then(data => {
-        L.geoJSON(data, {
-            style: layerStyle.default
-        }).addTo(map)
-
-    }) 
-    .catch(error => console.log(error));
-
 var layerStyle = {
     'default': {
-        'color': 'green',
+        'color': 'purple',
         'fillOpacity': 0.4,
         'weight': 2
     },
@@ -66,7 +54,7 @@ var layerStyle = {
         'weight': 2
     },
     'selection': {
-        'color': 'brown',
+        'color': 'yellow',
         'fillOpacity': 0.4,
         'weight': 2
     }
