@@ -121,6 +121,72 @@ async function fetchInfraDOT20Data() {
     }
 }
 
+async function fetchDEACoaslinesShorelinesData() {
+    try {
+        const response = await fetch("/app/data/processed/dea_coastlines_shorelines.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch resource");
+        } 
+
+        const data = await response.json();
+        
+        L.geoJSON(data, {
+            style: layerStyle.default,
+            onEachFeature: function(feature, layer) {
+                const props = feature.properties;
+                layer.bindPopup(props.HOTSPOTS_NA);
+                layer.on('click', function(){
+                    this.setStyle(layerStyle.selection)
+                    this.openPopup();
+                })
+                layer.on('mouseover', function(){
+                    this.setStyle(layerStyle.highlighted)
+                })
+                layer.on('mouseout', function(){
+                    this.setStyle(layerStyle.default)
+                })
+            }
+        }).addTo(map)
+        
+    } catch (error) {
+        console.log("There was an error loading GeoJSON:", error);
+    };
+}
+
+async function fetchDEACoaslinesRatesData() {
+    try {
+        const response = await fetch("/app/data/processed/dea_coastlines_rates.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch resource");
+        } 
+
+        const data = await response.json();
+        
+    L.geoJSON(data, {
+      style: layerStyle.default,
+      onEachFeature: function(feature, layer) {
+        const props = feature.properties;
+        // Popup fallback
+        const popupText = props.HOTSPOTS_NA || `Rate: ${props.rate_time || 'N/A'}`;
+        layer.bindPopup(popupText);
+
+        layer.on('click', function() {
+          this.setStyle(layerStyle.selection);
+          this.openPopup();
+        });
+        layer.on('mouseover', function() {
+          this.setStyle(layerStyle.highlighted);
+        });
+        layer.on('mouseout', function() {
+          this.setStyle(layerStyle.default);
+        });
+      }
+    }).addTo(map);
+        
+    } catch (error) {
+        console.log("There was an error loading GeoJSON:", error);
+    };
+}
 
 var layerStyle = {
     'default': {
@@ -139,3 +205,6 @@ var layerStyle = {
         'weight': 2
     }
 }
+
+fetchDEACoaslinesShorelinesData();
+fetchDEACoaslinesRatesData();
