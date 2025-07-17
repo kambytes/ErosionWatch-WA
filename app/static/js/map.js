@@ -38,6 +38,30 @@ async function fetchErosionHotspotsData() {
     };
 }
 
+async function fetchInfrasDOT18Data() {
+    try {
+        const response = await fetch("/app/data/processed/coastal_infrastructure_DOT_018.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch DOT-018");
+        }
+        
+        const data = await response.json();
+
+        L.geoJSON(data, {
+            pointToLayer: function(feature, latlng) {
+                return L.circleMarker(latlng, infraStyles.dot018.default);
+            },
+            onEachFeature: function(feature, layer) {
+                const props = feature.properties;
+                const name = props?.ASSET_NAME || "Unknown asset";
+                layer.bindPopup(`<strong>DOT-018</strong><br>${name}`);
+            }
+        }).addTo(map);
+    } catch (err) {
+        console.error("Error loading DOT-018:", err);
+    }
+}
+
 var layerStyle = {
     'default': {
         'color': 'purple',
