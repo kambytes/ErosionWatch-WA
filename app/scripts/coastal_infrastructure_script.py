@@ -34,3 +34,8 @@ def coastal_infrastructures_wfs():
             print(f"Saved {dataset}.geojson")
         except Exception as e:
             print(f"Error downloading {dataset}: {e}")
+
+# Calling the function
+coastal_infrastructures_wfs()
+# Print statement for successful donwload of datasets
+print("The datasets have been successfully downloaded")
