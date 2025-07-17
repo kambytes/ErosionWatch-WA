@@ -73,6 +73,54 @@ async function fetchInfrasDOT18Data() {
         console.error("Error loading DOT-018:", error);
     }
 }
+fetchInfraDOT20Data();
+async function fetchInfraDOT20Data() {
+    try {
+        const response = await fetch("/app/data/processed/coastal_infrastructure_DOT-020.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch DOT-020");
+        }
+
+        const data = await response.json();
+
+        L.geoJSON(data, {
+            style: function(feature) {
+                // Color by structype (example colors)
+                const structype = feature.properties.structype || "OTHER";
+                let fillColor = "#3388ff"; // default blue
+                
+                if (structype === "CPK") fillColor = "#f28f3b"; // orange for Coastal Protection Keys
+                else if (structype === "BLD") fillColor = "#33a02c"; // green for Buildings
+                else if (structype === "WAL") fillColor = "#e31a1c"; // red for Walls
+                // Add more structype cases as needed
+
+                return {
+                    color: fillColor,
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.5
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                const props = feature.properties || {};
+                const structype = props.structype || "Unknown";
+                const assetgroup = props.assetgroup || "N/A";
+                const editDate = props.EditDate_txt || "No date";
+
+                layer.bindPopup(
+                    `<strong>Structure Type:</strong> ${structype}<br>` +
+                    `<strong>Asset Group:</strong> ${assetgroup}<br>` +
+                    `<strong>Edit Date:</strong> ${editDate}`
+                );
+            }
+        }).addTo(map);
+
+        console.log("DOT-020 polygons added");
+    } catch (error) {
+        console.error("Error loading DOT-020:", error);
+    }
+}
+
 
 var layerStyle = {
     'default': {
