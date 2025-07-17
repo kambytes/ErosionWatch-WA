@@ -1,8 +1,8 @@
 import geopandas as gpd
 
 # Specify bounding box. Entire WA coastal bounding box approx
-ymax, xmin = -33.65, 115.28
-ymin, xmax = -33.66, 115.30
+ymax, xmin = -13.5, 112.0
+ymin, xmax = -35.0, 129.0
 
 # Set up WFS requests for annual shorelines & rates of change points
 deacl_annualshorelines_wfs = (
@@ -34,5 +34,5 @@ deacl_ratesofchange_gdf = deacl_ratesofchange_gdf.query(
     "(sig_time <= 0.01) & (certainty == 'good')"
 )
 
-deacl_annualshorelines_gdf.to_file("../data/processed/shorelines.geojson", driver="GeoJSON")
-deacl_ratesofchange_gdf.to_file("../data/processed/rates.geojson", driver="GeoJSON")
+deacl_annualshorelines_gdf.to_file("../data/processed/dea_coastlines_shorelines.geojson", driver="GeoJSON")
+deacl_ratesofchange_gdf.to_file("../data/processed/dea_coastlines_rates.geojson", driver="GeoJSON")
