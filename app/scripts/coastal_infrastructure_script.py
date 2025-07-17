@@ -24,7 +24,6 @@ def coastal_infrastructures_wfs():
             f"&version=2.0.0"
             f"&request=GetFeature"
             f"&typeNames={layer_name}"
-            f"&outputFormat=application/json"  # GeoJSON format
             f"&srsName=EPSG:4326"              # Reproject to lat/lon (WGS84)
         )
         
