@@ -38,27 +38,39 @@ async function fetchErosionHotspotsData() {
     };
 }
 
+fetchInfrasDOT18Data();
 async function fetchInfrasDOT18Data() {
     try {
         const response = await fetch("/app/data/processed/coastal_infrastructure_DOT_018.geojson");
         if (!response.ok) {
             throw new Error("Unable to fetch DOT-018");
         }
-        
+
         const data = await response.json();
 
         L.geoJSON(data, {
             pointToLayer: function(feature, latlng) {
-                return L.circleMarker(latlng, infraStyles.dot018.default);
+                // Simple orange circle marker with radius 6
+                return L.circleMarker(latlng, {
+                    radius: 6,
+                    fillColor: "orange",
+                    color: "darkorange",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
             },
             onEachFeature: function(feature, layer) {
-                const props = feature.properties;
-                const name = props?.ASSET_NAME || "Unknown asset";
-                layer.bindPopup(`<strong>DOT-018</strong><br>${name}`);
+                // Popup content using assetdesc and lga fields from properties
+                const props = feature.properties || {};
+                const desc = props.assetdesc || "No description";
+                const lga = props.lga || "Unknown area";
+
+                layer.bindPopup(`<strong>Asset:</strong> ${desc}<br><strong>LGA:</strong> ${lga}`);
             }
         }).addTo(map);
-    } catch (err) {
-        console.error("Error loading DOT-018:", err);
+    } catch (error) {
+        console.error("Error loading DOT-018:", error);
     }
 }
 
