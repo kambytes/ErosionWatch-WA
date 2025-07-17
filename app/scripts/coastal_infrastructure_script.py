@@ -13,7 +13,7 @@ DATASETS = {
     "coastal_infrastructure_DOT_018": "esri:Coastal_Infrastructure_Point__DOT-018_",
     "coastal_infrastructure_DOT-019": "esri:Coastal_Infrastructure_Line__DOT-019_",
     "coastal_infrastructure_DOT-020": "esri:Coastal_Infrastructure_DOT__DOT-020_",
-}
+} # DOT-19 does not seem to have a geometry layer, so it does not seem to be working. Will come back to it.
 
 # Download each layer and save as GeoJSON
 def coastal_infrastructures_wfs():
