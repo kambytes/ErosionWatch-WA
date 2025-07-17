@@ -5,25 +5,32 @@ DOT-18 (Points) - The Points feature class contains DoT Service Assets (water di
 DOT-19 (Lines) - The Lines feature class currently contains only DoT maintained roads. Roads included in this dataset are limited to those identified in the DoT asset management database
 DOT-20 (Polygons) - The Polygons feature class contains coastal protection structures (seawalls, groynes, breakwaters).
 """
-
 import geopandas as gpd
 
-# Set up WFS requests for annual shorelines & rates of change points
-deacl_annualshorelines_wfs = f'https://geoserver.dea.ga.gov.au/geoserver/wfs?' \
-                       f'service=WFS&version=1.1.0&request=GetFeature' \
-                       f'&typeName=dea:shorelines_annual&maxFeatures=1000' \
-                       f'&bbox={ymin},{xmin},{ymax},{xmax},' \
-                       f'urn:ogc:def:crs:EPSG:4326'
-deacl_ratesofchange_wfs = f'https://geoserver.dea.ga.gov.au/geoserver/wfs?' \
-                       f'service=WFS&version=1.1.0&request=GetFeature' \
-                       f'&typeName=dea:rates_of_change&maxFeatures=1000' \
-                       f'&bbox={ymin},{xmin},{ymax},{xmax},' \
-                       f'urn:ogc:def:crs:EPSG:4326'
+BASE_WFS_URL = "https://public-services.slip.wa.gov.au/public/services/SLIP_Public_Services/Infrastructure_and_Utilities_WFS/MapServer/WFSServer"
 
-# Load DEA Coastlines data from WFS using geopandas
-deacl_annualshorelines_gdf = gpd.read_file(deacl_annualshorelines_wfs)
-deacl_ratesofchange_gdf = gpd.read_file(deacl_ratesofchange_wfs)
+DATASETS = {
+    "coastal_infrastructure_DOT_018": "esri:Coastal_Infrastructure_Point__DOT-018_",
+    "coastal_infrastructure_DOT-019": "esri:Coastal_Infrastructure_Line__DOT-019_",
+    "coastal_infrastructure_DOT-020": "esri:Coastal_Infrastructure_DOT__DOT-020_",
+}
 
-# Ensure CRSs are set correctly
-deacl_annualshorelines_gdf.crs = 'EPSG:3577'
-deacl_ratesofchange_gdf.crs = 'EPSG:3577'
+# Download each layer and save as GeoJSON
+def coastal_infrastructures_wfs():
+    for dataset, layer_name in DATASETS.items():
+        print(f"Downloading {dataset}...")
+        wfs_url = (
+            f"{BASE_WFS_URL}?service=WFS"
+            f"&version=2.0.0"
+            f"&request=GetFeature"
+            f"&typeNames={layer_name}"
+            f"&outputFormat=application/json"  # GeoJSON format
+            f"&srsName=EPSG:4326"              # Reproject to lat/lon (WGS84)
+        )
+        
+        try:
+            gdf = gpd.read_file(wfs_url)
+            gdf.to_file(f"../data/processed/{dataset}.geojson", driver="GeoJSON")
+            print(f"Saved {dataset}.geojson")
+        except Exception as e:
+            print(f"Error downloading {dataset}: {e}")
