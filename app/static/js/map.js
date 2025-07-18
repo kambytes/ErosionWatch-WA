@@ -6,19 +6,34 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 var erosionHotspotsLayer = L.layerGroup();
+var coastalInfraDOT18Layer = L.layerGroup();
+var coastalInfraDOT19Layer = L.layerGroup();
+var coastalInfraDOT20Layer = L.layerGroup();
 
 var overlayMaps = {
-    "Coastal Erosion Hotspots": erosionHotspotsLayer
+    "Coastal Erosion Hotspots": erosionHotspotsLayer,
+    "Coastal Infrastructures (DOT-18)": coastalInfraDOT18Layer,
+    /* "Coastal Infrastructures (DOT-19)": coastalInfraDOT19Layer,*/
+    "Coastal Infrastructures (DOT-20)":coastalInfraDOT20Layer
 };
 
 var layerControl = L.control.layers(null, overlayMaps).addTo(map);
 
 // A tracker to prevent duplicate fetching
 let erosionHotspotsLoaded = false;
+let coastalInfraDOT18Loaded = false;
+/* let coastalInfraDOT19Loaded = false; */
+let coastalInfraDOT20Loaded = false;
 
 map.addEventListener('overlayadd', function(event) {
     if (event.name === "Coastal Erosion Hotspots" && !erosionHotspotsLoaded) {
         fetchErosionHotspotsData();
+    }
+    if (event.name === "Coastal Infrastructures (DOT-18)" && !coastalInfraDOT18Loaded) {
+        fetchInfrasDOT18Data();
+    }
+    if (event.name === "Coastal Infrastructures (DOT-20)" && !coastalInfraDOT20Loaded) {
+        fetchInfraDOT20Data();
     }
 });
 
@@ -57,7 +72,6 @@ async function fetchErosionHotspotsData() {
     };
 }
 
-fetchInfrasDOT18Data();
 async function fetchInfrasDOT18Data() {
     try {
         const response = await fetch("/app/data/processed/coastal_infrastructure_DOT_018.geojson");
@@ -67,7 +81,7 @@ async function fetchInfrasDOT18Data() {
 
         const data = await response.json();
 
-        L.geoJSON(data, {
+        const geoLayer = L.geoJSON(data, {
             pointToLayer: function(feature, latlng) {
                 // Simple orange circle marker with radius 6
                 return L.circleMarker(latlng, {
@@ -87,13 +101,16 @@ async function fetchInfrasDOT18Data() {
 
                 layer.bindPopup(`<strong>Asset:</strong> ${desc}<br><strong>LGA:</strong> ${lga}`);
             }
-        }).addTo(map);
+        });
+
+        coastalInfraDOT18Layer.addLayer(geoLayer);
+        coastalInfraDOT18Loaded = true;
+
     } catch (error) {
         console.error("Error loading DOT-018:", error);
     }
 }
 
-//fetchInfraDOT20Data();
 async function fetchInfraDOT20Data() {
     try {
         const response = await fetch("/app/data/processed/coastal_infrastructure_DOT-020.geojson");
@@ -103,7 +120,7 @@ async function fetchInfraDOT20Data() {
 
         const data = await response.json();
 
-        L.geoJSON(data, {
+        const geoLayer = L.geoJSON(data, {
             style: function(feature) {
                 // Color by structype (example colors)
                 const structype = feature.properties.structype || "OTHER";
@@ -133,7 +150,10 @@ async function fetchInfraDOT20Data() {
                     `<strong>Edit Date:</strong> ${editDate}`
                 );
             }
-        }).addTo(map);
+        });
+
+        coastalInfraDOT20Layer.addLayer(geoLayer);
+        coastalInfraDOT20Loaded = true;
 
         console.log("DOT-020 polygons added");
     } catch (error) {
