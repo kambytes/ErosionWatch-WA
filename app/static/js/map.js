@@ -5,7 +5,20 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-fetchErosionHotspotsData();
+var erosionHotspotsLayer = L.layerGroup();
+
+var overlayMaps = {
+    "Coastal Erosion Hotspots": erosionHotspotsLayer
+};
+
+var layerControl = L.control.layers(null, overlayMaps).addTo(map);
+
+map.addEventListener('overlayadd', function(event) {
+    if (event.name === "Coastal Erosion Hotspots") {
+        fetchErosionHotspotsData();
+    }
+});
+
 async function fetchErosionHotspotsData() {
     try {
         const response = await fetch("/app/data/processed/erosion_hotspots_geojson.geojson");
@@ -15,7 +28,7 @@ async function fetchErosionHotspotsData() {
 
         const data = await response.json();
         
-        L.geoJSON(data, {
+        const geoLayer = L.geoJSON(data, {
             style: layerStyle.default,
             onEachFeature: function(feature, layer) {
                 const props = feature.properties;
@@ -31,7 +44,9 @@ async function fetchErosionHotspotsData() {
                     this.setStyle(layerStyle.default)
                 })
             }
-        }).addTo(map)
+        });
+
+        erosionHotspotsLayer.addLayer(geoLayer);
         
     } catch (error) {
         console.log("There was an error loading GeoJSON:", error);
