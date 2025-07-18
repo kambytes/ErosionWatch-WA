@@ -73,6 +73,7 @@ async function fetchInfrasDOT18Data() {
         console.error("Error loading DOT-018:", error);
     }
 }
+
 fetchInfraDOT20Data();
 async function fetchInfraDOT20Data() {
     try {
@@ -121,6 +122,7 @@ async function fetchInfraDOT20Data() {
     }
 }
 
+fetchDEACoaslinesShorelinesData();
 async function fetchDEACoaslinesShorelinesData() {
     try {
         const response = await fetch("/app/data/processed/dea_coastlines_shorelines.geojson");
@@ -153,6 +155,7 @@ async function fetchDEACoaslinesShorelinesData() {
     };
 }
 
+fetchDEACoaslinesRatesData();
 async function fetchDEACoaslinesRatesData() {
     try {
         const response = await fetch("/app/data/processed/dea_coastlines_rates.geojson");
@@ -205,6 +208,3 @@ var layerStyle = {
         'weight': 2
     }
 }
-
-fetchDEACoaslinesShorelinesData();
-fetchDEACoaslinesRatesData();
