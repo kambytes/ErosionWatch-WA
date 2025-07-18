@@ -189,7 +189,7 @@ html, body {
 .section-image img {
   width: 100%;
   max-width: 500px;
-  border-radius: 12px;
+  border-radius: 5px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   object-fit: cover;
 }
@@ -338,4 +338,56 @@ html, body {
 
 .scroll-down:hover {
   transform: translateY(4px);
+}
+
+/* The captions */
+figure {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* Default figcaption style: below image, small and subtle */
+figcaption {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #6c7a89;
+  margin-top: 0.3rem;
+  text-align: right;
+}
+
+/* Optional class: position figcaption in bottom-right corner of image */
+.figure-caption-overlay figcaption {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent bg */
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  max-width: 90%;
+  text-align: right;
+}
+
+.hero-credit {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.hero-credit a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.hero-credit a:hover {
+  text-decoration: underline;
 }
