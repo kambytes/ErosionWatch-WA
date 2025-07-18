@@ -146,3 +146,124 @@
 .section-driftwood .paragraph {
   color: white;
 }
+
+/* Gallery of images */
+/* Wrap gallery in a section with background and padding */
+.section.section-sand {
+  padding: 4rem 2rem;
+  background-color: #f4e7d3; /* sandy beige */
+  color: #1c1c1c;
+}
+
+/* Gallery container centers and constrains width */
+.gallery-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0 1rem; /* optional horizontal padding */
+}
+
+/* Individual Slide */
+.gallery {
+  display: none;
+  position: relative;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  max-height: 400px; /* adjust as needed */
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+
+/* Slide Number */
+.slidenumber {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  color: white;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 4px 8px;
+  border-radius: 2px;
+  z-index: 10;
+}
+
+/* Caption Text */
+.gallery-caption {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 8px 16px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Navigation Arrows */
+.previous, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 22px;
+  background-color: rgba(0,0,0,0.3);
+  transform: translateY(-50%);
+  user-select: none;
+  z-index: 10;
+}
+
+.previous {
+  left: 16px;
+}
+
+.next {
+  right: 16px;
+}
+
+.previous:hover, .next:hover {
+  background-color: rgba(0,0,0,0.6);
+}
+
+/* Navigation Dots */
+.gallery-dots {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.dot {
+  cursor: pointer;
+  height: 14px;
+  width: 14px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fade Animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+@keyframes fade {
+  from {opacity: 0.4}
+  to {opacity: 1}
+}

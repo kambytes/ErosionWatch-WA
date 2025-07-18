@@ -66,8 +66,8 @@
           <p class="paragraph">ErosionWatch-WA is an interactive web application developed to address the eroding coastlines of Western Australia. It provides an interactive interface for users to visualise the historical shoreline changes and predict future erosion patterns along Western Australia's coastlines. By utilising publicly available datasets from DataWA, satellite imagery and AI forecasting, this tool delivers insights into our changing coastlines.</p>
         </div>
       </div>
-      </section>
     </section>
+  </section>
 
   <section id="main-content" class="section-sand">
     <section class="section section-sand">
@@ -84,51 +84,53 @@
           <p class="paragraph">ErosionWatch-WA is an interactive web application developed to address the eroding coastlines of Western Australia. It provides an interactive interface for users to visualise the historical shoreline changes and predict future erosion patterns along Western Australia's coastlines. By utilising publicly available datasets from DataWA, satellite imagery and AI forecasting, this tool delivers insights into our changing coastlines.</p>
         </div>
       </div>
-      </section>
     </section>
+  </section>
 
-    <!-- Gallery section -->
-    <section class="section section-sand">
+  <!-- Gallery section -->
+  <section class="section section-sand">
+    <div class="gallery-container">
       <!-- Gallery images -->
-      <div class="gallery">
+      <div class="gallery fade">
         <div class="slidenumber">1 / 5</div>
         <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="" style="width:100%">
+        <div class="gallery-caption">Caption Text</div>
       </div>
-      <div class="gallery">
+      <div class="gallery fade">
         <div class="slidenumber">2 / 5</div>
         <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="" style="width:100%">
+        <div class="gallery-caption">Caption Text</div>
       </div>
-      <div class="gallery">
+      <div class="gallery fade">
         <div class="slidenumber">3 / 5</div>
         <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="" style="width:100%">
+        <div class="gallery-caption">Caption Text</div>
       </div>
-      <div class="gallery">
+      <div class="gallery fade">
         <div class="slidenumber">4 / 5</div>
         <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="" style="width:100%">
+        <div class="gallery-caption">Caption Text</div>
       </div>
-      <div class="gallery">
+      <div class="gallery fade">
         <div class="slidenumber">5 / 5</div>
         <img src="/app/static/images/ErosionWatch-WA Logo.png" alt="" style="width:100%">
+        <div class="gallery-caption">Caption Text</div>
       </div>
       
       <!-- Buttons for next and previous image -->
-      <a class="previous"></a>
-      <a class="next"></a>
-
-      <!-- Captions for the images -->
-      <div class="">
-        <p id="caption"></p>
-      </div>
+      <a class="previous" onclick="previousSlide()">&#10094;</a>
+      <a class="next" onclick="nextSlide()">&#10095;</a>
 
       <!-- Image count dot -->
-      <div style="text-align: center;">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+      <div class="gallery-dots">
+        <span class="dot" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+        <span class="dot" onclick="goToSlide(3)"></span>
+        <span class="dot" onclick="goToSlide(4)"></span>
       </div>
-    </section>
+    </div>
+  </section>
 
 
     <footer class="site-footer">
