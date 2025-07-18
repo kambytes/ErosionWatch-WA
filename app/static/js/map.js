@@ -73,7 +73,8 @@ async function fetchInfrasDOT18Data() {
         console.error("Error loading DOT-018:", error);
     }
 }
-fetchInfraDOT20Data();
+
+//fetchInfraDOT20Data();
 async function fetchInfraDOT20Data() {
     try {
         const response = await fetch("/app/data/processed/coastal_infrastructure_DOT-020.geojson");
@@ -121,6 +122,74 @@ async function fetchInfraDOT20Data() {
     }
 }
 
+//fetchDEACoastlinesShorelinesData();
+async function fetchDEACoastlinesShorelinesData() {
+    try {
+        const response = await fetch("/app/data/processed/dea_coastlines_shorelines.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch resource");
+        } 
+
+        const data = await response.json();
+        
+        L.geoJSON(data, {
+            style: layerStyle.default,
+            onEachFeature: function(feature, layer) {
+                const props = feature.properties;
+                layer.bindPopup(props.HOTSPOTS_NA);
+                layer.on('click', function(){
+                    this.setStyle(layerStyle.selection)
+                    this.openPopup();
+                })
+                layer.on('mouseover', function(){
+                    this.setStyle(layerStyle.highlighted)
+                })
+                layer.on('mouseout', function(){
+                    this.setStyle(layerStyle.default)
+                })
+            }
+        }).addTo(map)
+        
+    } catch (error) {
+        console.log("There was an error loading GeoJSON:", error);
+    };
+}
+
+//fetchDEACoastlinesRatesData();
+async function fetchDEACoastlinesRatesData() {
+    try {
+        const response = await fetch("/app/data/processed/dea_coastlines_rates.geojson");
+        if (!response.ok) {
+            throw new Error("Unable to fetch resource");
+        } 
+
+        const data = await response.json();
+        
+    L.geoJSON(data, {
+      style: layerStyle.default,
+      onEachFeature: function(feature, layer) {
+        const props = feature.properties;
+        // Popup fallback
+        const popupText = props.HOTSPOTS_NA || `Rate: ${props.rate_time || 'N/A'}`;
+        layer.bindPopup(popupText);
+
+        layer.on('click', function() {
+          this.setStyle(layerStyle.selection);
+          this.openPopup();
+        });
+        layer.on('mouseover', function() {
+          this.setStyle(layerStyle.highlighted);
+        });
+        layer.on('mouseout', function() {
+          this.setStyle(layerStyle.default);
+        });
+      }
+    }).addTo(map);
+        
+    } catch (error) {
+        console.log("There was an error loading GeoJSON:", error);
+    };
+}
 
 var layerStyle = {
     'default': {

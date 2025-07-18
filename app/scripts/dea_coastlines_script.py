@@ -20,19 +20,23 @@ deacl_ratesofchange_wfs = (
     f"urn:ogc:def:crs:EPSG:4326"
 )
 
-# Load DEA Coastlines data from WFS using geopandas
+# Load your DEA GeoDataFrames
 deacl_annualshorelines_gdf = gpd.read_file(deacl_annualshorelines_wfs)
 deacl_ratesofchange_gdf = gpd.read_file(deacl_ratesofchange_wfs)
 
-# Ensure CRSs are set correctly
-deacl_annualshorelines_gdf.crs = "EPSG:3577"
-deacl_ratesofchange_gdf.crs = "EPSG:3577"
+# 1. Set CRS to EPSG:3577 if it's missing or not set properly
+deacl_annualshorelines_gdf = deacl_annualshorelines_gdf.set_crs("EPSG:3577", allow_override=True)
+deacl_ratesofchange_gdf = deacl_ratesofchange_gdf.set_crs("EPSG:3577", allow_override=True)
 
-# Optional: Keep only statistically significant (p <= 0.01) rates of change points
-# with "good" certainty (i.e. no poor quality flags)
+# 2. Reproject both to EPSG:4326 for web maps
+deacl_annualshorelines_gdf = deacl_annualshorelines_gdf.to_crs("EPSG:4326")
+deacl_ratesofchange_gdf = deacl_ratesofchange_gdf.to_crs("EPSG:4326")
+
+# 3. (Optional) Filter rates data for good certainty and significance
 deacl_ratesofchange_gdf = deacl_ratesofchange_gdf.query(
     "(sig_time <= 0.01) & (certainty == 'good')"
 )
 
+# 4. Save the GeoJSON files (NOW in lon/lat degrees!)
 deacl_annualshorelines_gdf.to_file("../data/processed/dea_coastlines_shorelines.geojson", driver="GeoJSON")
 deacl_ratesofchange_gdf.to_file("../data/processed/dea_coastlines_rates.geojson", driver="GeoJSON")
