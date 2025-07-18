@@ -74,7 +74,7 @@ async function fetchInfrasDOT18Data() {
     }
 }
 
-fetchInfraDOT20Data();
+//fetchInfraDOT20Data();
 async function fetchInfraDOT20Data() {
     try {
         const response = await fetch("/app/data/processed/coastal_infrastructure_DOT-020.geojson");
@@ -122,8 +122,8 @@ async function fetchInfraDOT20Data() {
     }
 }
 
-fetchDEACoaslinesShorelinesData();
-async function fetchDEACoaslinesShorelinesData() {
+//fetchDEACoastlinesShorelinesData();
+async function fetchDEACoastlinesShorelinesData() {
     try {
         const response = await fetch("/app/data/processed/dea_coastlines_shorelines.geojson");
         if (!response.ok) {
@@ -155,8 +155,8 @@ async function fetchDEACoaslinesShorelinesData() {
     };
 }
 
-fetchDEACoaslinesRatesData();
-async function fetchDEACoaslinesRatesData() {
+//fetchDEACoastlinesRatesData();
+async function fetchDEACoastlinesRatesData() {
     try {
         const response = await fetch("/app/data/processed/dea_coastlines_rates.geojson");
         if (!response.ok) {
