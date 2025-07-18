@@ -148,13 +148,6 @@
 }
 
 /* Gallery of images */
-/* Wrap gallery in a section with background and padding */
-.section.section-sand {
-  padding: 4rem 2rem;
-  background-color: #f4e7d3; /* sandy beige */
-  color: #1c1c1c;
-}
-
 /* Gallery container centers and constrains width */
 .gallery-container {
   max-width: 900px;
