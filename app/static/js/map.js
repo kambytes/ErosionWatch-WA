@@ -17,7 +17,7 @@ var layerControl = L.control.layers(null, overlayMaps).addTo(map);
 let erosionHotspotsLoaded = false;
 
 map.addEventListener('overlayadd', function(event) {
-    if (event.name === "Coastal Erosion Hotspots" && !erosionHotspotsLayer) {
+    if (event.name === "Coastal Erosion Hotspots" && !erosionHotspotsLoaded) {
         fetchErosionHotspotsData();
     }
 });
