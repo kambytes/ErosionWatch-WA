@@ -13,8 +13,11 @@ var overlayMaps = {
 
 var layerControl = L.control.layers(null, overlayMaps).addTo(map);
 
+// A tracker to prevent duplicate fetching
+let erosionHotspotsLoaded = false;
+
 map.addEventListener('overlayadd', function(event) {
-    if (event.name === "Coastal Erosion Hotspots") {
+    if (event.name === "Coastal Erosion Hotspots" && !erosionHotspotsLayer) {
         fetchErosionHotspotsData();
     }
 });
@@ -47,6 +50,7 @@ async function fetchErosionHotspotsData() {
         });
 
         erosionHotspotsLayer.addLayer(geoLayer);
+        erosionHotspotsLoaded = true;
         
     } catch (error) {
         console.log("There was an error loading GeoJSON:", error);
