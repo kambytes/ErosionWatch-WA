@@ -120,14 +120,29 @@
 }
 
 .section-blue .paragraph {
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
 }
 
-.section-dark {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
+.section-ocean-mist {
+  background-color: #c8d9f0; /* muted, misty blue */
+  color: #1c1c1c;
 }
 
-.section-dark .paragraph {
-  color: #d0d0d0;
+.section-sand {
+  background-color: #f4e7d3; /* sandy beige */
+  color: #1c1c1c;
+}
+
+.section-coastal-grey {
+  background-color: #dce3e9; /* soft grey with blue tint */
+  color: #1c1c1c;
+}
+
+.section-driftwood {
+  background-color: #c5b9a5; /* weathered driftwood */
+  color: white;
+}
+
+.section-driftwood .paragraph {
+  color: white;
 }
