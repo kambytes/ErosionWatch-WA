@@ -41,7 +41,7 @@ async function fetchErosionHotspotsData() {
     try {
         const response = await fetch("/app/data/processed/erosion_hotspots_geojson.geojson");
         if (!response.ok) {
-            throw new Error("Unable to fetch resource");
+            throw new Error("Unable to fetch Erosion Hotspots");
         } 
 
         const data = await response.json();
@@ -49,26 +49,45 @@ async function fetchErosionHotspotsData() {
         const geoLayer = L.geoJSON(data, {
             style: layerStyle.default,
             onEachFeature: function(feature, layer) {
-                const props = feature.properties;
-                layer.bindPopup(props.HOTSPOTS_NA);
-                layer.on('click', function(){
-                    this.setStyle(layerStyle.selection)
+                const props = feature.properties || {};
+
+                // Determine color based on priority
+                let priorityColor = 'grey';
+                if (props.MANAG_IMPO === "High") priorityColor = 'red';
+                else if (props.MANAG_IMPO === "Medium") priorityColor = 'orange';
+                else if (props.MANAG_IMPO === "Low") priorityColor = 'green';
+
+                // Construct popup content
+                const popupContent = `
+                    <strong>${props.HOTSPOT_NA || "Unnamed Hotspot"}</strong><br>
+                    <strong>Local Council:</strong> ${props.LOCAL_COAS || "Unknown"}<br>
+                    <strong>Priority:</strong> 
+                    <span style="color:${priorityColor}; font-weight:600">${props.MANAG_IMPO || "N/A"}</span>
+                `;
+
+                layer.bindPopup(popupContent);
+
+                // Interactivity
+                layer.on('click', function () {
+                    this.setStyle(layerStyle.selection);
                     this.openPopup();
-                })
-                layer.on('mouseover', function(){
-                    this.setStyle(layerStyle.highlighted)
-                })
-                layer.on('mouseout', function(){
-                    this.setStyle(layerStyle.default)
-                })
+                });
+                layer.on('mouseover', function () {
+                    this.setStyle(layerStyle.highlighted);
+                });
+                layer.on('mouseout', function () {
+                    this.setStyle(layerStyle.default);
+                });
             }
         });
 
+
         erosionHotspotsLayer.addLayer(geoLayer);
         erosionHotspotsLoaded = true;
-        
+
+        console.log("Erosion Hotspots polygons added")
     } catch (error) {
-        console.log("There was an error loading GeoJSON:", error);
+        console.log("Error loading Erosion Hotspots:", error);
     };
 }
 
@@ -83,18 +102,9 @@ async function fetchInfrasDOT18Data() {
 
         const geoLayer = L.geoJSON(data, {
             pointToLayer: function(feature, latlng) {
-                // Simple orange circle marker with radius 6
-                return L.circleMarker(latlng, {
-                    radius: 6,
-                    fillColor: "orange",
-                    color: "darkorange",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                });
+                return L.circleMarker(latlng, layerStyle.dot18);
             },
             onEachFeature: function(feature, layer) {
-                // Popup content using assetdesc and lga fields from properties
                 const props = feature.properties || {};
                 const desc = props.assetdesc || "No description";
                 const lga = props.lga || "Unknown area";
@@ -106,6 +116,7 @@ async function fetchInfrasDOT18Data() {
         coastalInfraDOT18Layer.addLayer(geoLayer);
         coastalInfraDOT18Loaded = true;
 
+        console.log("DOT-018 polygons added")
     } catch (error) {
         console.error("Error loading DOT-018:", error);
     }
@@ -122,20 +133,12 @@ async function fetchInfraDOT20Data() {
 
         const geoLayer = L.geoJSON(data, {
             style: function(feature) {
-                // Color by structype (example colors)
-                const structype = feature.properties.structype || "OTHER";
-                let fillColor = "#3388ff"; // default blue
-                
-                if (structype === "CPK") fillColor = "#f28f3b"; // orange for Coastal Protection Keys
-                else if (structype === "BLD") fillColor = "#33a02c"; // green for Buildings
-                else if (structype === "WAL") fillColor = "#e31a1c"; // red for Walls
-                // Add more structype cases as needed
-
+                const group = feature.properties.assetgroup || "OTHER";
                 return {
-                    color: fillColor,
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.5
+                color: getAssetGroupColor(group),
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.5
                 };
             },
             onEachFeature: function(feature, layer) {
@@ -145,9 +148,9 @@ async function fetchInfraDOT20Data() {
                 const editDate = props.EditDate_txt || "No date";
 
                 layer.bindPopup(
-                    `<strong>Structure Type:</strong> ${structype}<br>` +
-                    `<strong>Asset Group:</strong> ${assetgroup}<br>` +
-                    `<strong>Edit Date:</strong> ${editDate}`
+                `<strong>Structure Type:</strong> ${structype}<br>` +
+                `<strong>Asset Group:</strong> ${assetgroup}<br>` +
+                `<strong>Edit Date:</strong> ${editDate}`
                 );
             }
         });
@@ -161,12 +164,11 @@ async function fetchInfraDOT20Data() {
     }
 }
 
-//fetchDEACoastlinesShorelinesData();
 async function fetchDEACoastlinesShorelinesData() {
     try {
         const response = await fetch("/app/data/processed/dea_coastlines_shorelines.geojson");
         if (!response.ok) {
-            throw new Error("Unable to fetch resource");
+            throw new Error("Unable to fetch DEA Shorelines");
         } 
 
         const data = await response.json();
@@ -190,16 +192,15 @@ async function fetchDEACoastlinesShorelinesData() {
         }).addTo(map)
         
     } catch (error) {
-        console.log("There was an error loading GeoJSON:", error);
+        console.log("Error loading DEA Shorelines:", error);
     };
 }
 
-//fetchDEACoastlinesRatesData();
 async function fetchDEACoastlinesRatesData() {
     try {
         const response = await fetch("/app/data/processed/dea_coastlines_rates.geojson");
         if (!response.ok) {
-            throw new Error("Unable to fetch resource");
+            throw new Error("Unable to fetch DEA Rates of Change");
         } 
 
         const data = await response.json();
@@ -226,24 +227,47 @@ async function fetchDEACoastlinesRatesData() {
     }).addTo(map);
         
     } catch (error) {
-        console.log("There was an error loading GeoJSON:", error);
+        console.log("Error loading DEA Rates of Change:", error);
     };
 }
 
-var layerStyle = {
-    'default': {
-        'color': 'purple',
-        'fillOpacity': 0.4,
-        'weight': 2
-    },
-    'highlighted': {
-        'color': 'blue',
-        'fillOpacity': 0.4,
-        'weight': 2
-    },
-    'selection': {
-        'color': 'yellow',
-        'fillOpacity': 0.4,
-        'weight': 2
-    }
+const layerStyle = {
+  default: {
+    color: "#2c6bed",       // Your main theme blue
+    fillOpacity: 0.4,
+    weight: 2
+  },
+  highlighted: {
+    color: "#ffaa00",       // Warm highlight (golden sand tone)
+    fillOpacity: 0.5,
+    weight: 3
+  },
+  selection: {
+    color: "#ffcc00",       // Bright yellow for clicked
+    fillOpacity: 0.6,
+    weight: 3
+  },
+  dot18: {
+    radius: 6,
+    fillColor: "orange",
+    color: "darkorange",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  }
+};
+
+function getAssetGroupColor(group) {
+  const colors = {
+    "LD": "#f4a259",   // Sandy orange – Land-based
+    "BL": "#7b9acc",   // Steel blue – Buildings
+    "CS": "#2c6bed",   // Your theme – Coastal structures
+    "MS": "#76c893",   // Aqua green – Maritime
+    "LF": "#ffe156",   // Yellow – Launch Facilities
+    "MR": "#915c83",   // Mauve – Marinas
+    "SV": "#aaaaaa",   // Grey – Services
+    "SWL": "#60a3bc",  // Teal – Seawalls
+    "OTHER": "#cccccc"
+  };
+  return colors[group] || colors["OTHER"];
 }
