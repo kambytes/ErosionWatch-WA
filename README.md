@@ -1,7 +1,7 @@
-# ErosionWatch-WA 🌊 (Project under construction...)
+# ErosionWatch-WA 🌊 (Project is currently in development. A live demo or deployment link will be added here once ready.)
 **Mapping and Predicting Coastal Erosion Across Western Australia**
 
-![ErosionWatch-WA Screenshot](/app/static/images/README-file-image.jpg)
+![ErosionWatch-WA Screenshot](./app/static/images/README-file-image.jpg)
 
 ErosionWatch-WA is an interactive, data-driven web application that visualises both historical and predictive coastal erosion across Western Australia. Built using modern geospatial tools, this platform empowers environmentalists, policymakers, urban planners, and the general public to understand and respond to shoreline retreat risks with actionable insights.
 
@@ -44,3 +44,4 @@ ErosionWatch-WA provides visibility into these regions and aims to assist in pla
 - **DataWA & DEA APIs** – Official government geospatial data
 
 ---
+Created by Kamleshkumar Senthilkumar
