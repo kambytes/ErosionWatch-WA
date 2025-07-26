@@ -35,7 +35,7 @@ ErosionWatch-WA provides visibility into these regions and aims to assist in pla
 
 ---
 
-## Technologies Used
+## Technologies Used/to be:
 
 - **Leaflet.js** – Interactive maps
 - **GeoPandas** – Spatial data processing
